@@ -1,0 +1,17 @@
+body { 
+  
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.index{
+	background: url(../static/images/index.jpg) no-repeat center center fixed; 
+}
+
+.welcome{
+	background: url(../static/images/welcome.jpg) no-repeat center center fixed; 
+
+
+}
