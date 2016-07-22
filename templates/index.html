@@ -58,13 +58,6 @@
             </div>          
         </div>
     </nav>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    {{ message }}
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
         <!-- Top content -->
         <div class="top-content">
         	
@@ -136,7 +129,7 @@
         <script src="../static/assets/js/jquery-1.11.1.min.js"></script>
         <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="../static/assets/js/jquery.backstretch.min.js"></script>
-        <script src="../static/assets/js/scripts.js"></script>
+
         
         <!--[if lt IE 10]>
             <script src="assets/js/placeholder.js"></script>

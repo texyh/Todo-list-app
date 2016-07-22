@@ -1,13 +1,17 @@
 from flask_sqlalchemy import SQLAlchemy
-from app import app
+from flask import Flask
 import os
 
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 
+
+
+app = Flask(__name__)
+
 #Flask bycrypt for password hashing    
 from flask_bcrypt import Bcrypt
-
+bcrypt = Bcrypt(app)
 
 
 
@@ -34,7 +38,7 @@ class User(db.Model):
     password = db.Column('password', db.String, nullable=False)
 
 
-    def __init__(self,first_name,last_name,email,password,confirmed=False):
+    def __init__(self,first_name,last_name,email,password):
                 self.first_name = first_name
                 self.last_name = last_name
                 self.email = email

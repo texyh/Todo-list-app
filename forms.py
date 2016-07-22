@@ -24,7 +24,7 @@ class RegistrationForm(Form):
     )
     password = PasswordField(
         'password',
-        validators=[Required(), Length(min=6, max=25)]
+        validators=[Required('minimum of 6 characters'), Length(min=6, max=25)]
     )
     confirm = PasswordField(
         're-Password',
