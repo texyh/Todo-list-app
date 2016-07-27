@@ -36,6 +36,7 @@ class User(db.Model):
     last_name = db.Column('last name', db.String, nullable=False)
     email = db.Column('email', db.String, nullable=False)
     password = db.Column('password', db.String, nullable=False)
+    todo = db.relationship('Todo', backref='user', lazy='dynamic')
 
 
     def __init__(self,first_name,last_name,email,password):
@@ -43,7 +44,17 @@ class User(db.Model):
                 self.last_name = last_name
                 self.email = email
                 self.password = bcrypt.generate_password_hash(password)
-                
+
+class Todo(db.Model):
+    __tablename__ = 'todolist'
+    id = db.Column('id',db.Integer,primary_key=True)
+    todo = db.Column('todo',db.String,nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __init__(self,todo,user_id):
+        self.todo = todo
+        self.user_id = user_id
+                    
 
 
 if __name__ == '__main__':

@@ -79,7 +79,7 @@ def Login():
             form.password.errors.append('Invalid password, try again')
             return render_template('index.html', form=form)
         flash ('successfully logged in!!!!')
-        return render_template('home.html')
+        return redirect(url_for('home'))
 
     flash('Email not found, please Register!!')
     return render_template('index.html', form =  form)
@@ -88,18 +88,57 @@ def Login():
 
 @app.route('/home', methods=['POST','GET'])
 def home():
-    return render_template('home.html')
+    todo = Todo.query.all()
+    return render_template('home.html',todos=todo)
     
 
 @app.route('/todo', methods = ['POST'])
 def todo():
     _todo = request.form['todo']
+    #delete = request.form['del']
 
     if _todo:
-        newTodo = _todo[::-1]
-        return jsonify({'tidy':newTodo})
+        try:
+            newTodo = Todo(todo=_todo)
+            db.session.add(newTodo)
+            db.session.commit()
+            return jsonify({'tidy':_todo})
+        except:
+            db.session.rollback()
+
+
+@app.route('/delete', methods = ['POST'])
+def delete():
+    
+    delete = request.form['del']
+
+    if delete:
+        try:
+            dele = Todo.query.get(int(delete))
+            db.session.delete(dele)
+            db.session.commit()
+            return True
+        except:
+            db.session.rollback()
+
+
+
+@app.route('/edit', methods = ['POST'])
+def edit():
+    edit = request.form['edit']
+    id_ = request.form['id']
+    if edit and id_:
+        try:
+            newTodo = Todo.query.get(int(id_))
+            newTodo.todo = edit
+            db.session.commit()
+            return jsonify({'edited': edit})
+        except:
+            db.session.rollback()
     else:
         return render_template('welcome.html')
+
+
 
 
 

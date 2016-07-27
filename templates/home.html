@@ -56,7 +56,11 @@
             </div>          
         </div>
     </nav>
-
+    <hr>
+    <hr>
+    {% for messages in get_flashed_messages() %}
+        <div class="alert alert-info">{{ messages }}</div>
+    {% endfor %}    
         <div class="container" id="main">
             <h1>jQuery To Do List Plugin Demo</h1>
             <form role ="form" id="main_input_box">
@@ -67,13 +71,22 @@
             </form>
             <form>
                 <ol class="list-group list_of_items">
+                    {% for item in todos %}
+                    <li class='list-group-item'>
+                    <div class='text_holder' >{{ item.todo }}
+                        <div class='btn-group pull-right'>
+                          <button class='delete btn btn-warning' value='{{ item.id }}'>Delete</button>
+                          <button class='edit btn btn-success' value='{{ item.id }}'>Edit</button>
+                        </div>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' class='pull-right'></label>
+                        </div>
+                    </div>
+                    </li>
+                    {% endfor %}
                 </ol>
             </form>
         </div>
-            {% for messages in get_flashed_messages() %}
-                    <div class="alert alert-info">{{ messages }}</div>
-            {% endfor %}
-
         <!-- Javascript -->
         <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
         <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
