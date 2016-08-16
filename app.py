@@ -43,26 +43,17 @@ def Register():
                             password=form.password.data
                             )
                 db.session.add(user)
-                db.session.commit()
-                flask ('successfully signed up....')
-                return render_template('home.html')
             except:
                 db.session.rollback()
-                return 'error'
-        return render_template('index.html',form=form)
-
+            else:
+                flash ('successfully signed up....')
+                session['email'] = form.email.data
+                session['logged_in'] = True
+                db.session.commit()
+                return redirect(url_for('home'))
         form.email.errors.append('Email already exist, seems you signup already')
+        return render_template('welcome.html',form=form)
     return render_template('welcome.html', form=form)
-
-
-
-
-
-
-
-
-
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -71,47 +62,48 @@ def Login():
     if request.method == 'POST' and form.validate():
         email_exist = User.query.filter_by(email=form.email.data).first()
         if email_exist is None:
-            flash('Email not found, please Register!!')
             form.email.errors.append('Email not found, please signup')
             return render_template('index.html', form=form)
         if bcrypt.check_password_hash(email_exist.password, form.password.data) is False:
-            flash('Invalid password, try again!!')
             form.password.errors.append('Invalid password, try again')
             return render_template('index.html', form=form)
+        session['email'] = form.email.data
+        session['logged_in'] = True
         flash ('successfully logged in!!!!')
         return redirect(url_for('home'))
-
-    flash('Email not found, please Register!!')
     return render_template('index.html', form =  form)
 
 
 
 @app.route('/home', methods=['POST','GET'])
+@login_required
 def home():
-    todo = Todo.query.all()
+    user = User.query.filter_by(email= session['email']).first()
+    todo = Todo.query.filter_by(user_id=user.id)
+    #check = Done.query.filter_by(todo_id=todo.id).all()
     return render_template('home.html',todos=todo)
     
 
 @app.route('/todo', methods = ['POST'])
 def todo():
+    user = User.query.filter_by(email=session['email']).first()
     _todo = request.form['todo']
     #delete = request.form['del']
-
     if _todo:
         try:
-            newTodo = Todo(todo=_todo)
+            newTodo = Todo(todo=_todo, user_id = user.id)
             db.session.add(newTodo)
             db.session.commit()
             return jsonify({'tidy':_todo})
         except:
+            return 'sometyn went wrong'
             db.session.rollback()
+    return 'notin to post'
 
 
 @app.route('/delete', methods = ['POST'])
-def delete():
-    
+def delete():    
     delete = request.form['del']
-
     if delete:
         try:
             dele = Todo.query.get(int(delete))
@@ -120,7 +112,6 @@ def delete():
             return True
         except:
             db.session.rollback()
-
 
 
 @app.route('/edit', methods = ['POST'])
@@ -139,9 +130,10 @@ def edit():
         return render_template('welcome.html')
 
 
-
-
-
+@app.route('/logout')
+def logout():
+    session.pop('email',None)
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)

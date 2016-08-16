@@ -12,8 +12,8 @@
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         <link rel="stylesheet" href="../static/assets/css/style.css">
         <link rel="stylesheet" type="text/css" href="static/main.css">
-        <link rel="stylesheet" href="../static/styles.css">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../static/styles.css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,7 +46,7 @@
                 <a href='' class="navbar-brand">Bootstrap</a>
             </div>  
             <div class="collapse navbar-collapse" id ='navbar-collapse'>
-            <a href="{{url_for('index')}}" class = 'btn btn-info navbar-btn navbar-right'>LOGIN</a>
+            <a href="{{url_for('index')}}" class = 'btn btn-info navbar-btn navbar-right'>LOGOUT</a>
                 <ul class="nav navbar-nav">
                     <li><a href="#feedback">Home</a></li>
                     <li><a href="#feedback">Contact</a></li>
@@ -66,9 +66,11 @@
             <form role ="form" id="main_input_box">
                 <label>
                 <input type="text" class ="form-control" id="custom_textbox" name="Item" placeholder="What do you need to do?">
-                <input type="submit" value="Add" class="btn btn-primary add_button">
+                <input type="submit" value="Add" class="btn btn-block btn-primary add_button">
                 </label>
             </form>
+        </div>
+        <div class="container" id = 'sub-main'>
             <form>
                 <ol class="list-group list_of_items">
                     {% for item in todos %}
@@ -79,8 +81,9 @@
                           <button class='edit btn btn-success' value='{{ item.id }}'>Edit</button>
                         </div>
                         <div class='checkbox'>
-                            <label><input type='checkbox' class='pull-right'></label>
+                            <label><input type='checkbox' class='pull-right' {{done}}></label>
                         </div>
+
                     </div>
                     </li>
                     {% endfor %}

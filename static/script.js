@@ -32,14 +32,17 @@ $(document).ready(function(){
 			url:'/delete'
 		})
 		.done(function(data){
-			$(this).closest("li").remove();
+			if (data){
+				$(this).closest("li").remove();
+			}
+			
 
 		})	
 	});
 
 	$(".list_of_items").on("click", "button.edit", function (){
 		var id_button = this.value
-		var editItemBox = "<form class='edit_input_box'><input type='text' class='itembox'></form>";
+		var editItemBox = "<form class='edit_input_box'><input type='text' class='itembox'><button class='btn btn-primary'>Update</button></form>";
 		var originalItem = $(this).parent().val();
 		var deleteButton = "<button class='delete btn btn-warning'>Delete</button>";
 		var editButton = "<button class='edit btn btn-success'>Edit</button>";
@@ -58,7 +61,7 @@ $(document).ready(function(){
 		})
 		.done(function(data){
 			if (data){
-				$(this).replaceWith("<div>" + data.edited + twoButtons + "</div>"+ checkBox);
+				$(this).closest(editItemBox).replaceWith("<div>" + data.edited + twoButtons + "</div>"+ checkBox);
 			}
 
 		});

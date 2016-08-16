@@ -36,7 +36,7 @@ class User(db.Model):
     last_name = db.Column('last name', db.String, nullable=False)
     email = db.Column('email', db.String, nullable=False)
     password = db.Column('password', db.String, nullable=False)
-    todo = db.relationship('Todo', backref='user', lazy='dynamic')
+    todo = db.relationship('Todo', backref='users', lazy='dynamic')
 
 
     def __init__(self,first_name,last_name,email,password):
@@ -50,6 +50,7 @@ class Todo(db.Model):
     id = db.Column('id',db.Integer,primary_key=True)
     todo = db.Column('todo',db.String,nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
 
     def __init__(self,todo,user_id):
         self.todo = todo
