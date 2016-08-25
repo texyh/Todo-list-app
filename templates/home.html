@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Bootstrap Login Form Template</title>
+        <title>I-DO</title>
 
         <!-- CSS -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
@@ -43,7 +43,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href='' class="navbar-brand">Bootstrap</a>
+                <a href='' class="navbar-brand">I-DO</a>
             </div>  
             <div class="collapse navbar-collapse" id ='navbar-collapse'>
             <a href="{{url_for('index')}}" class = 'btn btn-info navbar-btn navbar-right'>LOGOUT</a>
@@ -62,7 +62,7 @@
         <div class="alert alert-info">{{ messages }}</div>
     {% endfor %}    
         <div class="container" id="main">
-            <h1>jQuery To Do List Plugin Demo</h1>
+            <h1>Let's help you achieve your daily goals</h1>
             <form role ="form" id="main_input_box">
                 <label>
                 <input type="text" class ="form-control" id="custom_textbox" name="Item" placeholder="What do you need to do?">
@@ -71,7 +71,7 @@
             </form>
         </div>
         <div class="container" id = 'sub-main'>
-            <form>
+            <form role = 'form'>
                 <ol class="list-group list_of_items">
                     {% for item in todos %}
                     <li class='list-group-item'>
