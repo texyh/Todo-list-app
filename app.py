@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 #CONFIGURATIONS
 app.config.from_object(os.environ['APP_SETTINGS'])
+print (os.environ['APP_SETTINGS'])
 
 
 def login_required(f):
