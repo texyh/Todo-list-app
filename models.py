@@ -15,12 +15,9 @@ bcrypt = Bcrypt(app)
 
 
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.secret_key = 'emeka'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'main.sqlite')
-app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
-#password hashing
-app.config['SECURITY_PASSWORD_SALT'] = 'my_precious_two'
+
+
+app.config.from_object(os.environ['APP_SETTINGS'])
 db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)

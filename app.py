@@ -2,13 +2,15 @@ from flask import Flask, render_template, request, session, \
     flash, redirect, url_for, jsonify
 from forms import *
 from functools import wraps
-from models import *
+#from models import *
+import os
 
 app = Flask(__name__)
 
 
 #CONFIGURATIONS
-app.secret_key = 'emeka'
+app.config.from_object(os.environ['APP_SETTINGS'])
+
 
 def login_required(f):
     @wraps(f)
@@ -136,4 +138,4 @@ def logout():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
